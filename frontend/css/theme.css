@@ -1,0 +1,141 @@
+:root {
+  /* Backgrounds */
+  --bg-primary: #080b10;
+  --bg-gradient-start: #0c1016;
+  --bg-gradient-end: #07090d;
+  --bg-panel: rgba(13, 18, 26, 0.92);
+  --bg-panel-solid: #0d121a;
+  --bg-input: rgba(8, 11, 16, 0.85);
+
+  /* Textures */
+  --grid-line: rgba(80, 110, 140, 0.08);
+
+  /* Borders */
+  --border: rgba(100, 130, 170, 0.22);
+  --border-hover: rgba(120, 160, 200, 0.45);
+  --border-active: rgba(0, 212, 255, 0.65);
+
+  /* Accents */
+  --accent-cyan: #00d4ff;
+  --accent-cyan-glow: rgba(0, 212, 255, 0.35);
+  --accent-orange: #ff9e2c;
+  --accent-orange-glow: rgba(255, 158, 44, 0.35);
+  --accent-green: #2ecc71;
+  --accent-green-glow: rgba(46, 204, 113, 0.35);
+  --accent-red: #ff4d4f;
+  --accent-red-glow: rgba(255, 77, 79, 0.35);
+
+  /* Text */
+  --text-primary: #e8eef5;
+  --text-secondary: #8fa3b8;
+  --text-muted: #556677;
+
+  /* Fonts */
+  --font-ui: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", "Courier New", monospace;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* Shadows */
+  --shadow-glow-cyan: 0 0 12px var(--accent-cyan-glow);
+  --shadow-glow-orange: 0 0 12px var(--accent-orange-glow);
+  --shadow-glow-green: 0 0 12px var(--accent-green-glow);
+  --shadow-glow-red: 0 0 12px var(--accent-red-glow);
+  --shadow-panel: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(0, 80, 120, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 120, 0, 0.06) 0%, transparent 45%),
+    linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background-color: var(--bg-primary);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* Hex grid texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("../assets/hex-grid.svg");
+  background-size: 60px 52px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  text-shadow: 0 0 8px var(--accent-cyan-glow);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* Typography */
+.mono {
+  font-family: var(--font-mono);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-cyan {
+  color: var(--accent-cyan);
+}
+
+.text-orange {
+  color: var(--accent-orange);
+}
+
+.text-green {
+  color: var(--accent-green);
+}
+
+.text-red {
+  color: var(--accent-red);
+}

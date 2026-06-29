@@ -1,0 +1,274 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Course table */
+.course-table-wrap {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.course-table thead {
+  background: rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+}
+
+.course-table th,
+.course-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.course-table th {
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.course-table tbody tr {
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.course-table tbody tr:hover {
+  background: rgba(0, 212, 255, 0.06);
+}
+
+.course-table tbody tr.selected {
+  background: rgba(0, 212, 255, 0.14);
+}
+
+.course-table td.text-muted {
+  color: var(--text-muted);
+}
+
+/* Graph */
+.course-toolbar {
+  flex-wrap: wrap;
+}
+
+/* Tree panel */
+.tree-panel {
+  font-size: 13px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.tree-list,
+.tree-children {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tree-children {
+  padding-left: 24px;
+  border-left: 1px dashed var(--border);
+  margin-left: 8px;
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  margin: 2px 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: all 0.12s ease;
+}
+
+.tree-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border);
+}
+
+.tree-item-course {
+  color: var(--text-primary);
+}
+
+.tree-item-group-all {
+  color: var(--accent-cyan);
+}
+
+.tree-item-group-any {
+  color: var(--accent-green);
+}
+
+.tree-item-group-seq {
+  color: var(--text-secondary);
+}
+
+.tree-item-icon {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.tree-item-name {
+  flex: 1;
+}
+
+.tree-item-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.tree-item:hover .tree-item-actions {
+  opacity: 1;
+}
+
+.tree-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.tree-btn:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+.tree-item.dragging {
+  opacity: 0.5;
+}
+
+.tree-item.drop-before {
+  border-top: 2px solid var(--accent-cyan);
+}
+
+.tree-item.drop-after {
+  border-bottom: 2px solid var(--accent-cyan);
+}
+
+.tree-item.drop-child {
+  background: rgba(0, 212, 255, 0.12);
+  border-color: var(--accent-cyan);
+}
+
+.tree-status {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  min-width: 44px;
+  text-align: center;
+}
+
+.status-idle {
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.status-running {
+  color: var(--accent-orange);
+  border-color: rgba(255, 158, 44, 0.55);
+  background: rgba(255, 158, 44, 0.1);
+}
+
+.status-retry {
+  color: var(--accent-cyan);
+  border-color: rgba(0, 212, 255, 0.55);
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.status-success {
+  color: var(--accent-green);
+  border-color: rgba(46, 204, 113, 0.55);
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.status-failed {
+  color: var(--accent-red);
+  border-color: rgba(255, 77, 79, 0.55);
+  background: rgba(255, 77, 79, 0.1);
+}
+
+/* Election tabs */
+.election-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.election-tab {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.election-tab:hover {
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+}
+
+.election-tab.active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.tree-op-select {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 11px;
+  outline: none;
+}
+
+.tree-op-select:focus {
+  border-color: var(--accent-cyan);
+}
+
+.course-table-wrap {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+/* Checkbox inline */
+input[type="checkbox"] {
+  accent-color: var(--accent-cyan);
+  vertical-align: middle;
+}
+
+/* Utility */
+.gap-2 {
+  gap: 8px;
+}
+
+.hidden {
+  display: none !important;
+}

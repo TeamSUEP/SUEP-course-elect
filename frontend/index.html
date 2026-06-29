@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Elect Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style-sample.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-title">COURSE ELECT TERMINAL</div>
+          <div class="brand-subtitle">SUEP Automated Course Selection System</div>
+        </div>
+      </div>
+      <div class="status-bar">
+        <div class="status-item">
+          <span id="demo-badge" class="badge badge-orange hidden">DEMO</span>
+          <button id="btn-demo-toggle" class="btn btn-ghost">开启 Demo 模式</button>
+        </div>
+        <div class="status-item">
+          <span id="status-dot" class="status-dot offline"></span>
+          <span id="status-text">未登录</span>
+        </div>
+        <div class="status-item text-muted">v0.2.0</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="main-content">
+        <!-- Login + Task params -->
+        <div class="grid-2">
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">身份认证</div>
+              <span id="login-badge" class="badge badge-red">未登录</span>
+            </div>
+            <div class="panel-body">
+              <div class="form-row">
+                <label class="form-label">学号</label>
+                <input id="username" class="input" type="text" placeholder="202xxxxx">
+              </div>
+              <div class="form-row">
+                <label class="form-label">密码</label>
+                <input id="password" class="input" type="password" placeholder="IDS 密码">
+              </div>
+              <div class="form-row">
+                <label class="form-label" style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                  <input id="remember-username" type="checkbox" checked>
+                  记住学号
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="form-label" style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                  <input id="verify-ssl" type="checkbox" checked>
+                  验证 SSL 证书（遇到证书错误可取消勾选）
+                </label>
+              </div>
+              <div class="flex-row">
+                <button id="btn-login" class="btn btn-primary grow">登录</button>
+                <button id="btn-logout" class="btn btn-ghost">退出</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">任务参数</div>
+            </div>
+            <div class="panel-body">
+              <div class="grid-3">
+                <div class="form-row">
+                  <label class="form-label">请求间隔 (秒)</label>
+                  <input id="interval" class="input" type="number" value="5" min="1">
+                </div>
+                <div class="form-row">
+                  <label class="form-label">线程间隔 (秒)</label>
+                  <input id="threads-interval" class="input" type="number" value="0.5" min="0" step="0.1">
+                </div>
+                <div class="form-row">
+                  <label class="form-label">最大重试次数</label>
+                  <input id="max-retries" class="input" type="number" value="0" min="0" title="0 为无限重试">
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Countdown -->
+        <section class="panel countdown-section">
+          <div class="panel-header">
+            <div class="panel-title">任务倒计时</div>
+            <div class="flex-row">
+              <button id="btn-sync" class="btn btn-cyan">同步服务器时间</button>
+              <button id="btn-start" class="btn btn-primary">开始</button>
+              <button id="btn-stop" class="btn btn-danger">停止</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="countdown-grid">
+              <div class="cd-digit" id="countdown-h">00</div>
+              <div class="cd-sep">:</div>
+              <div class="cd-digit" id="countdown-m">00</div>
+              <div class="cd-sep">:</div>
+              <div class="cd-digit cd-with-ms">
+                <span id="countdown-s">00</span>
+                <span id="countdown-ms" class="countdown-ms">.000</span>
+              </div>
+              <div class="cd-label">Hours</div>
+              <div></div>
+              <div class="cd-label">Minutes</div>
+              <div></div>
+              <div class="cd-label">Seconds</div>
+            </div>
+            <div class="countdown-meta">
+              <span>目标服务器时间: <strong id="target-time" class="text-orange">--</strong></span>
+              <span>本地偏移: <strong id="time-offset" class="text-cyan">--</strong></span>
+              <span>预计本地触发: <strong id="local-trigger" class="text-cyan">--</strong></span>
+            </div>
+            <div class="form-row" style="margin-top: 14px; margin-bottom: 0;">
+              <label class="form-label">设定目标时间</label>
+              <input id="input-target" class="input" type="datetime-local" style="max-width: 280px;">
+            </div>
+          </div>
+        </section>
+
+        <!-- Course list -->
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">课程列表</div>
+            <div class="flex-row">
+              <label class="form-label" style="margin: 0; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input id="check-availability" type="checkbox" checked>
+                检查容量
+              </label>
+              <button id="btn-refresh-elections" class="btn btn-cyan">刷新批次</button>
+              <button id="btn-add-course-node" class="btn btn-primary" disabled>添加选中课程到任务</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div id="election-tabs" class="election-tabs">
+              <div class="text-muted">请先刷新选课批次</div>
+            </div>
+            <div class="course-toolbar flex-row" style="margin-bottom: 12px;">
+              <input id="course-search" class="input" type="text" placeholder="搜索课程编号 / 名称 / 教师" style="max-width: 320px;">
+            </div>
+            <div class="course-table-wrap">
+              <table class="course-table" id="course-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>教师</th>
+                    <th>状态</th>
+                  </tr>
+                </thead>
+                <tbody id="course-tbody">
+                  <tr>
+                    <td colspan="5" class="text-muted" style="text-align: center;">请先选择选课批次</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tree panel -->
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">任务层级</div>
+            <div class="flex-row" style="flex-wrap: wrap; gap: 6px;">
+              <button id="btn-add-all" class="btn btn-cyan">+ All（与）</button>
+              <button id="btn-add-any" class="btn btn-cyan">+ Any（或）</button>
+              <button id="btn-add-seq" class="btn btn-cyan">+ Sequence（顺序）</button>
+              <button id="btn-clear-tasks" class="btn btn-ghost">清空</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div id="tree-panel" class="tree-panel">
+              <div class="text-muted">暂无任务节点</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Logs -->
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">操作日志</div>
+            <button id="btn-clear-log" class="btn btn-ghost">清空</button>
+          </div>
+          <div class="panel-body">
+            <div class="terminal" id="terminal"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/tree.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
